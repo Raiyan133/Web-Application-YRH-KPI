@@ -28,7 +28,7 @@
     <!-- Sidebar -->
     <?php
       //session_start();
-      include('../admin/include/sidebar.php');
+      include('../admin/include/admin_sidebar.php');
     ?>
     <!-- End of Sidebar -->
 
@@ -41,7 +41,7 @@
         <!-- Topbar -->
         <?php
         //session_start();
-        include('../admin/include/topbar.php');
+        include('../admin/include/admin_topbar.php');
         ?>
         <!-- End of Topbar -->
 
@@ -119,7 +119,7 @@
       <!-- Footer -->
       <?php
       //session_start();
-      include('../admin/include/footer.php');
+      include('../admin/include/admin_footer.php');
       ?>
       <!-- End of Footer -->
 
