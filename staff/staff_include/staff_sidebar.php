@@ -2,7 +2,7 @@
 <ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion " id="accordionSidebar">
 
 <!-- Sidebar - Brand -->
-<a class="sidebar-brand d-flex align-items-center justify-content-center" href="admin_home.php">
+<a class="sidebar-brand d-flex align-items-center justify-content-center" href="staff_home.php">
   <div class="sidebar-brand-text mx-3">KPI YRH</div>
 </a>
 
@@ -11,7 +11,7 @@
 
 <!-- Nav Item - Dashboard -->
 <li class="nav-item">
-  <a class="nav-link" href="admin_home.php">
+  <a class="nav-link" href="staff_home.php">
     <i class="fas fa-fw fa-home"></i>
     <span>หน้าแรก</span></a>
 </li>
@@ -33,16 +33,16 @@
   <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded">
       
-      <a class="collapse-item" href="admin_ind.php">เพิ่มตัวชี้วัดใหม่</a>
-      <a class="collapse-item" href="admin_ind.php">แก้ไขตัวชี้วัด</a>
-      <a class="collapse-item" href="admin_ind.php">ลบตัวชี้วัด</a>
+      <a class="collapse-item" href="staff_ind.php">เพิ่มตัวชี้วัดใหม่</a>
+      <a class="collapse-item" href="staff_ind.php">แก้ไขตัวชี้วัด</a>
+      <a class="collapse-item" href="staff_ind.php">ลบตัวชี้วัด</a>
     </div>
   </div>
 </li>
 
 <!-- Nav Item - Utilities Collapse Menu -->
 <li class="nav-item">
-  <a class="nav-link" href="#">
+  <a class="nav-link" href="staff_insert.php">
     <i class="fas fa-fw fa-edit"></i>
     <span>ป้อนข้อมูลตัวชี้วัด</span></a>
 </li>
@@ -58,7 +58,7 @@
 <!-- Nav Item - Pages Collapse Menu -->
 <li class="nav-item">
   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-    <i class="fas fa-fw fa-chart-area"></i>
+    <i class="fas fa-fw fa-chart-line"></i>
     <span>จัดการกราฟ</span>
   </a>
   <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
@@ -69,12 +69,20 @@
   </div>
 </li>
 
+<!-- Nav Item - ป้อนข้อมูลตัวชี้วัด -->
+<li class="nav-item">
+  <a class="nav-link" href="#">
+    <i class="fas fa-fw fa-chart-area"></i>
+    <span>เปรียบเทียบกราฟ</span></a>
+</li>
+
+
 <!-- Divider -->
 <hr class="sidebar-divider my-0">
 
 <!-- Nav Item - Dashboard -->
 <li class="nav-item">
-  <a class="nav-link" href="#">
+  <a class="nav-link" href="staff_change_password.php">
     <i class="fas fa-fw fa-unlock"></i>
     <span>เปลี่ยนรหัสผ่าน</span></a>
 </li>

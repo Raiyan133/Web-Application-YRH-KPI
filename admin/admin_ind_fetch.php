@@ -1,6 +1,6 @@
  <?php  
  
- $connect = mysqli_connect("localhost","root", "", "Indicator_Project");
+ $connect = mysqli_connect("localhost","root", "", "YRH_KPI");
  $connect->query("set names utf8");  
   
  if(isset($_POST["id"]))  

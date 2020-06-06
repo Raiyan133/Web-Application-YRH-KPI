@@ -8,7 +8,7 @@
 define("HOSTNAME","localhost");
 define("USERNAME","root");
 define("PASSWORD","");
-define("DATABASE","Indicator_Project");
+define("DATABASE","YRH_KPI");
 
 $msg=" ";
 /*$dbhandle = mysql_connect('localhost', 'root' ,'') or die("Unable to connect to MySQL");

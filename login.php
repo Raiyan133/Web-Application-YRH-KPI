@@ -1,3 +1,62 @@
+<?php
+session_start();
+include('include/db.php');
+
+// username and password receive from register form
+if (isset($_POST['ok'])) {
+    if (!empty($_POST['username']) && !empty($_POST['password'])) {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        // To protect MySQL injection (more detail about MySQL injection)
+//        $username = stripslashes($username);
+//        $password = stripslashes($password);
+//        $username = mysqli_real_escape_string($connection, $username);
+//        $password = mysqli_real_escape_string($connection, $password);
+        //check compare to database
+        $sql = "SELECT * FROM admin WHERE username='$username' and password='$password'";
+        $result = mysqli_query($connect, $sql);
+        // Mysql_num_row is counting table row
+        $count = mysqli_num_rows($result);
+        // If result matched $myusername and $mypassword, table row must be 1 row
+        if ($count == 1) {
+            // Register $username, $password and redirect to file "login_success.php"
+            $_SESSION['username'] = $username;
+//            $_SESSION['password'] = $password;
+            // redirect to profile page
+            header("Location:admin/admin_home.php");
+        } else {
+            //$error='Wrong Username or Password';
+            $message = "Username & Password ไม่ถูกต้อง";
+        }
+
+
+        $sql1 = "SELECT * FROM staff WHERE staff_username='$username' and staff_password='$password'";
+        $result1 = mysqli_query($connect, $sql1);
+        // Mysql_num_row is counting table row
+        $count1 = mysqli_num_rows($result1);
+        // If result matched $myusername and $mypassword, table row must be 1 row
+        if ($count1 == 1) {
+            // Register $username, $password and redirect to file "login_success.php"
+            $_SESSION['username'] = $username;
+//            $_SESSION['password'] = $password;
+            // redirect to profile page
+            header("Location:staff/staff_home.php");
+        } else {
+            //$error='Wrong Username or Password';
+            $message = "Username & Password ไม่ถูกต้อง";
+        }
+
+
+    } else if (empty($_POST['username']) && empty($_POST['password'])) {
+        $message = "กรุณาป้อนข้อมูลให้ครบและถูกต้อง";
+    } else if (empty($_POST['username']) && !empty($_POST['password'])) {
+        $message = "กรุณาป้อนข้อมูลให้ครบและถูกต้อง";
+    } else if (!empty($_POST['username']) && empty($_POST['password'])) {
+        $message = "กรุณาป้อนข้อมูลให้ครบและถูกต้อง";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -82,40 +141,39 @@
                       <div class="p-5">
                         <div class="text-center">
                           <h1 class="h4 text-gray-900 mb-4">ลงชื่อเข้าใช้</h1>
+                            <div class="form-group">
+                              <?php if (!empty($message)) {
+                                echo "<span style=\"color:red\">$message</span>";
+                              }
+                              ?>
+                            </div>  
+                            <form action="" method="post" class="user">
+                              <div class="form-group">
+                                <input type="text" class="form-control form-control-user" name="username" id="username" placeholder="Username">
+                              </div>
+                              <div class="form-group">
+                                <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password">
+                              </div>
+                              <input class="btn btn-secondary btn-user btn-block bg-gray-900" type="submit" name="ok" id="ok" value="Login" />
+                            </form>
                         </div>
-                        <form class="user">
-                          <div class="form-group">
-                            <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Username">
-                          </div>
-                          <div class="form-group">
-                            <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
-                          </div>
-                          <a href="#" class="btn btn-secondary btn-user btn-block bg-gray-900">
-                            Login
-                          </a>
-                        </form>
+                      </div>
                     </div>
-                  </div>
+                  </div><div class="card o-hidden border-0 shadow-lg my-3"></div>
                 </div>
-                <div class="card o-hidden border-0 shadow-lg my-3"></div>
               </div>
+              <div class="card o-hidden border-0 shadow-lg my-5"></div>
+              <div class="card o-hidden border-0 shadow-lg my-4"></div>
             </div>
-            <div class="card o-hidden border-0 shadow-lg my-5"></div>
-            <div class="card o-hidden border-0 shadow-lg my-5"></div>
-            <div class="card o-hidden border-0 shadow-lg my-5"></div>
           </div>
         </div>
-      </div>
-      <!-- End of Main Content -->
+        <!-- End of Main Content -->
 
       <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Trainee Raiyan.J FTU 2019</span>
-          </div>
-        </div>
-      </footer>
+      <?php
+      //session_start();
+      include('include/footer.php');
+      ?>
       <!-- End of Footer -->
 
     </div>

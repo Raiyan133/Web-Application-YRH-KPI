@@ -2,7 +2,7 @@
 
 //define connection elements
 $dbHost = "localhost";
-$dbDatabase = "Indicator_Project";
+$dbDatabase = "YRH_KPI";
 $dbUsername = "root";
 $dbPassword = "";
 

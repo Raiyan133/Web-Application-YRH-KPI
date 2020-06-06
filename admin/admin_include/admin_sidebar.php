@@ -9,7 +9,7 @@
 <!-- Divider -->
 <hr class="sidebar-divider my-0">
 
-<!-- Nav Item - Dashboard -->
+<!-- Nav Item - หน้าแรก -->
 <li class="nav-item">
   <a class="nav-link" href="admin_home.php">
     <i class="fas fa-fw fa-home"></i>
@@ -17,14 +17,48 @@
 </li>
 
 <!-- Divider -->
+<hr class="sidebar-divider my-0">
+
+<!-- Nav Item - จัดการหน้าแรก -->
+<li class="nav-item">
+  <a class="nav-link" href="admin_managehome.php">
+    <i class="fas fa-fw fa-cog"></i>
+    <span>จัดการหน้าแรก</span></a>
+</li>
+
+<!-- Divider -->
 <hr class="sidebar-divider">
+
+<!-- Heading -->
+<div class="sidebar-heading">
+  สมาชิก
+</div>
+
+<!-- Nav Item - จัดการสมาชิก -->
+<li class="nav-item">
+  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+    <i class="fas fa-fw fa-user"></i>
+    <span>จัดการสมาชิก</span>
+  </a>
+  <div id="collapseOne" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+    <div class="bg-white py-2 collapse-inner rounded">
+      <a class="collapse-item" href="admin_staff.php">ดูสมาชิก</a>
+      <a class="collapse-item" href="admin_staff.php">แก้ไขสมาชิก</a>
+      <a class="collapse-item" href="admin_staff.php">ลบสมาชิก</a>
+  </div>
+</li>
+
+<!-- Divider -->
+<hr class="sidebar-divider">
+
+
 
 <!-- Heading -->
 <div class="sidebar-heading">
   ตัวชี้วัด
 </div>
 
-<!-- Nav Item - Pages Collapse Menu -->
+<!-- Nav Item - จัดการตัวชี้วัด -->
 <li class="nav-item">
   <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
     <i class="fas fa-fw fa-list"></i>
@@ -40,9 +74,9 @@
   </div>
 </li>
 
-<!-- Nav Item - Utilities Collapse Menu -->
+<!-- Nav Item - ป้อนข้อมูลตัวชี้วัด -->
 <li class="nav-item">
-  <a class="nav-link" href="#">
+  <a class="nav-link" href="admin_insert.php">
     <i class="fas fa-fw fa-edit"></i>
     <span>ป้อนข้อมูลตัวชี้วัด</span></a>
 </li>
@@ -55,10 +89,10 @@
   กราฟ
 </div>
 
-<!-- Nav Item - Pages Collapse Menu -->
+<!-- Nav Item - จัดการกราฟ -->
 <li class="nav-item">
   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-    <i class="fas fa-fw fa-chart-area"></i>
+    <i class="fas fa-fw fa-chart-line"></i>
     <span>จัดการกราฟ</span>
   </a>
   <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
@@ -69,14 +103,11 @@
   </div>
 </li>
 
-<!-- Divider -->
-<hr class="sidebar-divider my-0">
-
-<!-- Nav Item - Dashboard -->
+<!-- Nav Item - ป้อนข้อมูลตัวชี้วัด -->
 <li class="nav-item">
   <a class="nav-link" href="#">
-    <i class="fas fa-fw fa-unlock"></i>
-    <span>เปลี่ยนรหัสผ่าน</span></a>
+    <i class="fas fa-fw fa-chart-area"></i>
+    <span>เปรียบเทียบกราฟ</span></a>
 </li>
 
 <!-- Divider -->

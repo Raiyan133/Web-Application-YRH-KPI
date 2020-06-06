@@ -1,3 +1,7 @@
+<?php
+  include('../include/username.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,21 +27,22 @@
 
   <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 
-</head><?php include "connectdb.php"; ?>
+  <script>
+  function getTeam(val) {
+  	$.ajax({
+  	type: "POST",
+  	url: "admin_get_team.php",
+  	data:'degreeid='+val,
+  	success: function(data){
+  		$("#team").html(data);
+  	}
+  	});
+  }
+  </script>
 
-<script>
-function getTeam(val) {
-	$.ajax({
-	type: "POST",
-	url: "admin_ind_get_team.php",
-	data:'degreeid='+val,
-	success: function(data){
-		$("#team").html(data);
-	}
-	});
-}
+</head>
 
-</script>
+<?php include "connectdb.php"; ?>
 
 <body id="page-top">
 
@@ -47,7 +52,7 @@ function getTeam(val) {
     <!-- Sidebar -->
     <?php
       //session_start();
-      include('../admin/include/admin_sidebar.php');
+      include('../admin/admin_include/admin_sidebar.php');
     ?>
     <!-- End of Sidebar -->
 
@@ -60,7 +65,7 @@ function getTeam(val) {
         <!-- Topbar -->
         <?php
         //session_start();
-        include('../admin/include/admin_topbar.php');
+        include('../include/topbar.php');
         ?>
         <!-- End of Topbar -->
 
@@ -92,7 +97,7 @@ function getTeam(val) {
                               <span class="h7 text-gray-900 mb-4 form-text">ความถี่ :</span>
                             </div>
                             <div class="col-sm-4">
-                            <select required class="form-control" name="type" id="type">
+                              <select required class="form-control" name="type" id="type">
                                 <option value="" disabled selected>โปรดเลือกความถี่</option>
                                 <option value="รายเดือน">รายเดือน</option>
                                 <option value="3 เดือน">3 เดือน</option>
@@ -129,12 +134,12 @@ function getTeam(val) {
                             </div>                          
                           </div>
 
-                          <div class="form row">
+                          <div class="form-group row">
                             <div class="col-sm-2">
                               <span class="h7 text-gray-900 mb-4 form-text">ระดับ :</span>
                             </div>
                             <div class="col-sm-4">
-                              <select class="form-control" name="degree" id="degree" onChange="getTeam(this.value);">
+                              <select class="form-control" type="text" name="degree" id="degree" onChange="getTeam(this.value);">
                                 <option value="">โปรดเลือกระดับ</option>
                                   <?php
                                   $sql1="SELECT * FROM degree";
@@ -151,7 +156,7 @@ function getTeam(val) {
                               <span class="h7 text-gray-900 mb-4 form-text">ทีม :</span>
                             </div>
                             <div class="col-sm-4">
-                              <select class="form-control"  id="team" name="team">
+                              <select class="form-control" type="text" id="team" name="team">
                                 <option value="">โปรดเลือกระดับก่อน</option>
                               </select>
                             </div>
@@ -177,7 +182,7 @@ function getTeam(val) {
             </div>
 
 
-            <div id="result" style="padding-top: 50px; width: 100%" align="center"></div>
+            <div id="result" style="padding-top: 50px; width: 100%"></div>
           </div>
 
           
@@ -191,7 +196,7 @@ function getTeam(val) {
       <!-- Footer -->
       <?php
       //session_start();
-      include('../admin/include/admin_footer.php');
+      include('../include/footer.php');
       ?>
       <!-- End of Footer -->
 
@@ -217,12 +222,12 @@ function getTeam(val) {
   <!-- Custom scripts for all pages-->
   <script src="../js/sb-admin-2.min.js"></script>
 
-  <!-- Page level plugins -->
+  <!-- Page level plugins
   <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-  <!-- Page level custom scripts -->
-  <script src="../js/demo/datatables-demo.js"></script>
+  Page level custom scripts
+  <script src="../js/demo/datatables-demo.js"></script> -->
 
 </body>
 
@@ -275,12 +280,12 @@ function getTeam(val) {
               }  
               else  
               {  
-                alert("กรุณาเลือกความถี่");  
+                alert("กรุณาเลือกความถี่"); 
               }
            }  
            else  
            {  
-                alert("กรุณาป้อนข้อมูลให้ครบ");  
+                alert("กรุณาป้อนข้อมูลให้ครบทุกช่อง");  
            }  
       });  
       $(document).on('click', '.update', function(){  
@@ -290,16 +295,8 @@ function getTeam(val) {
                 method:"POST",  
                 data:{id:id},  
                 dataType:"json",  
-                success:function(data){  
-                     $('#admin_ind_action').text("บันทึกการแก้ไข");  
-                     $('#num_id').val(id);  
-                     $('#indicator_id').val(data.indicator_id);  
-                     $('#indicator_name').val(data.indicator_name);  
-                     $('#first_name').val(data.first_name);  
-                     $('#last_name').val(data.last_name); 
-                     $('#type').val(data.type); 
-                     $('#degree').val(data.degree); 
-                     $('#team').val(data.team);  
+                success:function(data){
+                      getTeam1(id, data);  
                 }  
            })  
       });  
@@ -325,6 +322,31 @@ function getTeam(val) {
            }  
       });  
  });  
+
+ function getTeam1(id, data1) {
+  	$.ajax({
+  	type: "POST",
+  	url: "admin_get_team.php",
+  	data:'degreeid='+data1.degree,
+  	success: function(data){
+  		$("#team").html(data);
+      setData(id, data1);
+  	}
+  	});
+  }
+ function setData(id, data)
+ {
+  $('#admin_ind_action').text("บันทึกการแก้ไข");  
+                     $('#num_id').val(id);  
+                     $('#indicator_id').val(data.indicator_id);  
+                     $('#indicator_name').val(data.indicator_name);  
+                     $('#first_name').val(data.first_name);  
+                     $('#last_name').val(data.last_name); 
+                     $('#type').val(data.type); 
+                     $('#degree').val(data.degree); 
+                      $('#team').val(data.team);
+ }
+
  </script> 
 
 

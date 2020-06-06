@@ -24,9 +24,9 @@
   <div class="topbar-divider d-none d-sm-block"></div>
 
   <li class="nav-item dropdown no-arrow">
-    <a class="nav-link dropdown-toggle" href="#">
-      <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-    </a>
+    <div class="nav-link dropdown-toggle">
+      <?php echo '<span class="mr-2 d-none d-lg-inline text-gray-500 small"> ' . $username . ' </span>';?>
+    </div>
   </li>
 </ul>
 
@@ -36,7 +36,7 @@
   <div class="topbar-divider d-none d-sm-block"></div>
 
   <li class="nav-item dropdown no-arrow">
-    <a href="#" class="btn btn-secondary align-items-center" >
+    <a href="../include/logout.php" class="btn btn-secondary align-items-center" >
       <span class="text">Logout</span>
     </a>
   </li>

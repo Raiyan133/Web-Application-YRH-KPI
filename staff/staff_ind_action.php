@@ -1,14 +1,14 @@
 <?php  
 
    
- if(isset($_POST["admin_ind_action"]))  
+ if(isset($_POST["staff_ind_action"]))  
  {  
       $output = '';  
-    //   include('../admin/include/db.php');
-      $connect = mysqli_connect("localhost", "root", "", "Indicator_Project"); 
+    //   include('../staff/include/db.php');
+      $connect = mysqli_connect("localhost", "root", "", "YRH_KPI"); 
       $connect->query("set names utf8"); 
 
-      if($_POST["admin_ind_action"] =="บันทึก")  
+      if($_POST["staff_ind_action"] =="บันทึก")  
       {  
            $indicator_id = mysqli_real_escape_string($connect, $_POST["ind_id"]); 
            $indicator_name = mysqli_real_escape_string($connect, $_POST["Name"]); 
@@ -36,7 +36,7 @@
               }
 
       }  
-      if($_POST["admin_ind_action"] == "บันทึกการแก้ไข")  
+      if($_POST["staff_ind_action"] == "บันทึกการแก้ไข")  
       {  
            $indicator_id = mysqli_real_escape_string($connect, $_POST["ind_id"]); 
            $indicator_name = mysqli_real_escape_string($connect, $_POST["Name"]); 
@@ -55,7 +55,7 @@
               }
 
       }  
-      if($_POST["admin_ind_action"] == "ลบ")  
+      if($_POST["staff_ind_action"] == "ลบ")  
       {  
 
             $sql = "DELETE FROM indicator WHERE id = ".$_POST["id"]."";

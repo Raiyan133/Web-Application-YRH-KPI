@@ -1387,6 +1387,11 @@ pre code {
   border-top: 2px solid #e3e6f0;
 }
 
+.table-a {
+  border: 1px solid #e3e6f0;
+  align-items: right;
+}
+
 .table-sm th,
 .table-sm td {
   padding: 0.3rem;
@@ -1849,7 +1854,7 @@ textarea.form-control {
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 5rem;
 }
 
 .form-text {

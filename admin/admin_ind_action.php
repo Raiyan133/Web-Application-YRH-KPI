@@ -5,7 +5,7 @@
  {  
       $output = '';  
     //   include('../admin/include/db.php');
-      $connect = mysqli_connect("localhost", "root", "", "Indicator_Project"); 
+      $connect = mysqli_connect("localhost", "root", "", "YRH_KPI"); 
       $connect->query("set names utf8"); 
 
       if($_POST["admin_ind_action"] =="บันทึก")  

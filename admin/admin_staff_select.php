@@ -1,4 +1,3 @@
-
 <?php  
  
  $output = '';  
@@ -6,11 +5,11 @@
  $connect->query("set names utf8"); 
 
 
- if(isset($_POST["admin_ind_action"]))  
+ if(isset($_POST["admin_staff_action"]))  
  {  
 
 
- 	  $sql = "SELECT indicator.id, indicator.indicator_id, indicator.indicator_name, indicator.first_name, indicator.last_name, indicator.type, indicator.degree, indicator.team_code, degree.degree_name FROM indicator,degree WHERE degree.id=indicator.degree";
+ 	  $sql = "SELECT Staff.id, Staff.staff_name, Staff.staff_surname, Staff.staff_birthday, Staff.staff_id_num, Staff.staff_degree, Staff.staff_team, Staff.staff_position, Staff.staff_username, Staff.staff_password, degree.degree_name FROM Staff,degree WHERE degree.id=Staff.staff_degree ORDER BY staff_degree ASC";
 
                
            if(mysqli_query($connect, $sql))  
@@ -21,21 +20,19 @@
                 
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                      <h6 class="m-0 font-weight-bold text-secondary" align="center">ข้อมูลตัวชี้วัดทั้งหมด</h6>
+                      <h6 class="m-0 font-weight-bold text-secondary">ข้อมูลตัวชี้วัดทั้งหมด</h6>
                     </div>
                       <div class="card-body">
                         <div class="table-responsive">
-                         <table class="table table-bordered" id="dataTable">
+                         <table class="table table-bordered">
                          
                          <thead>  
                           <tr>  
-                               <th width="5%">รหัส</th>  
-                               <th width="20%">ชื่อตัวชี้วัด</th>
-                               <th width="30%">ตัวตั้ง</th>  
-                               <th width="30%">ตัวหาร</th> 
-                               <th width="5%">ความถี่</th> 
-                               <th width="20%">ระดับ</th>  
-                               <th width="5%">ทีม</th> 
+                               <th width="10%">ระดับ</th>  
+                               <th width="10%">ทีม</th>
+                               <th width="10%">ชื่อ</th>  
+                               <th width="10%">นามสกุล</th> 
+                               <th width="10%">ตำแหน่ง</th>
                                <th width="5%">แก้ไข</th>  
                                <th width="5%">ลบ</th>  
                           </tr>  
@@ -48,13 +45,11 @@
                           $output .= '  
                               <tbody>
                                <tr>  
-                                    <td>'.$row["indicator_id"].'</td>  
-                                    <td>'.$row["indicator_name"].'</td>
-                                    <td>'.$row["first_name"].'</td>  
-                                    <td>'.$row["last_name"].'</td> 
-                                    <td>'.$row["type"].'</td> 
-                                    <td>'.$row["degree_name"].'</td> 
-                                    <td>'.$row["team_code"].'</td> 
+                                    <td>'.$row["degree_name"].'</td>  
+                                    <td>'.$row["staff_team"].'</td>
+                                    <td>'.$row["staff_name"].'</td>  
+                                    <td>'.$row["staff_surname"].'</td> 
+                                    <td>'.$row["staff_position"].'</td>
                                     <td><button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-user btn-block bg-gradient-warning update" align="center">แก้ไข</button></td>  
                                     <td><button type="button" name="delete" id="'.$row["id"].'" class="btn btn-danger btn-user btn-block bg-gradient-danger delete" align="center">ลบ</button></td>  
                                </tr>  
@@ -81,13 +76,3 @@
         
  }  
  ?>
-
- <!-- Page level plugins -->
- <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="../js/demo/datatables-demo.js"></script>
-
-</body>
-</html>
