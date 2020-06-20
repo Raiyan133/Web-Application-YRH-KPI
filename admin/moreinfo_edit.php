@@ -115,7 +115,7 @@ if (isset($_POST['id'])) {
         </div>
     </div>
 
-    <form class="form-group text-right" method="post" name="form1" action="admin_insert_3m_edit.php">
+    <form class="form-group text-right" method="post" name="form1" action="">
 
 
 

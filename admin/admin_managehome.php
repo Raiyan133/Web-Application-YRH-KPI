@@ -36,7 +36,7 @@ if (!empty($active)) {
   <!-- Custom styles for this template-->
   <link href="../css/sb-admin-2.min.css" rel="stylesheet">
 
-  
+
 
 </head>
 
@@ -158,70 +158,71 @@ if (!empty($active)) {
                               <td><?php echo $row["degree_name"]; ?></td>
                               <td><?php echo $row["team_code"]; ?></td>
                               <td><button type="button" class="btn btn-info btn-user btn-block bg-gradient-info" data-toggle="modal" data-target="#modalmoreinfo" data-id="<?php echo $row['graph_id']; ?>" id="moreinfo">ดู</button></td>
-                              <td><div align="center"><a href="admin_managehome.php?active=<?= $row['graph_id']; ?> "><img
-                                            src="../img/active.png" width="25" height="25"/></a></div></td>
-                              <td><div align="center"><a href="admin_managehome.php?non_active=<?= $row['graph_id']; ?>"><img
-                                            src="../img/active_non.png" width="25" height="25"/></a></div>
-                        </td>
+                              <td>
+                                <div align="center"><a href="admin_managehome.php?active=<?= $row['graph_id']; ?> "><img src="../img/active.png" width="25" height="25" /></a></div>
+                              </td>
+                              <td>
+                                <div align="center"><a href="admin_managehome.php?non_active=<?= $row['graph_id']; ?>"><img src="../img/active_non.png" width="25" height="25" /></a></div>
+                              </td>
                               <td><span>
-            <?php $status = $row['status'];
-            if ($status == 1) {
-                echo '<span style="color:green">เลือก</span>';
-            } else {
-                echo '<span style="color:red">ไม่เลือก</span>';
-            }
-            ?>
-          </span></td>
+                                  <?php $status = $row['status'];
+                                  if ($status == 1) {
+                                    echo '<span style="color:green">เลือก</span>';
+                                  } else {
+                                    echo '<span style="color:red">ไม่เลือก</span>';
+                                  }
+                                  ?>
+                                </span></td>
+
+                    </div>
+                    </tr>
+                  <?php } ?>
+                  </tbody>
+
+                  </table>
+                  <div class="modal fade" id="modalmoreinfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                      <div class="modal-content ">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle">ข้อมูลเพิ่มเติม</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <div id="modal-loader" style="text-align: center; display: none;">
+                            <img src="ajax-loader.gif">
+                          </div>
+                          <div id="dynamic-content">
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
                   </div>
-                  </tr>
-                <?php } ?>
-                </tbody>
-
-                </table>
-                <div class="modal fade" id="modalmoreinfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" >
-                            <div class="modal-dialog modal-lg" role="document" >
-                                <div class="modal-content ">
-                                    <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">ข้อมูลเพิ่มเติม</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    </div>
-                                    <div class="modal-body" >
-                                      <div id="modal-loader" style="text-align: center; display: none;">
-                                          <img src="ajax-loader.gif">
-                                      </div>
-                                      <div id="dynamic-content">
-                                      </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                                    </div>
-                                </div>
-                            </div>
-                          </div>
-
                 </div>
               </div>
+
+
             </div>
-
-
         </div>
+        </form>
       </div>
-      </form>
+      <!-- /.container-fluid -->
+
     </div>
-    <!-- /.container-fluid -->
+    <!-- End of Main Content -->
 
-  </div>
-  <!-- End of Main Content -->
-
-  <!-- Footer -->
-  <?php
-  //session_start();
-  include('../include/footer.php');
-  ?>
-  <!-- End of Footer -->
+    <!-- Footer -->
+    <?php
+    //session_start();
+    include('../include/footer.php');
+    ?>
+    <!-- End of Footer -->
 
   </div>
   <!-- End of Content Wrapper -->
@@ -247,35 +248,34 @@ if (!empty($active)) {
 
 
 
-  <script> 
-      /* View Function*/
-      $(document).ready(function(){
-        $(document).on('click', '#moreinfo', function(e){
-          e.preventDefault();
-          var graph = $(this).data('id');   // it will get id of clicked row
-          $('#dynamic-content').html(''); // leave it blank before ajax call
-          $('#modal-loader').show();      // load ajax loader
-          $.ajax({
+  <script>
+    /* View Function*/
+    $(document).ready(function() {
+      $(document).on('click', '#moreinfo', function(e) {
+        e.preventDefault();
+        var graph = $(this).data('id'); // it will get id of clicked row
+        $('#dynamic-content').html(''); // leave it blank before ajax call
+        $('#modal-loader').show(); // load ajax loader
+        $.ajax({
             url: 'moreinfo.php',
             type: 'POST',
-            data: 'id='+graph,
+            data: 'id=' + graph,
             dataType: 'html'
           })
-          .done(function(data){
-            console.log(data);  
-            $('#dynamic-content').html('');    
+          .done(function(data) {
+            console.log(data);
+            $('#dynamic-content').html('');
             $('#dynamic-content').html(data); // load response 
-            $('#modal-loader').hide();      // hide ajax loader 
+            $('#modal-loader').hide(); // hide ajax loader 
           })
-          .fail(function(){
+          .fail(function() {
             $('#dynamic-content').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
             $('#modal-loader').hide();
           });
-        });
       });
-    </script>
+    });
+  </script>
 
 </body>
 
 </html>
-
