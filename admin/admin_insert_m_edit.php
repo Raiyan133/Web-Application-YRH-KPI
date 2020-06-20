@@ -2,12 +2,43 @@
 include('../include/db.php');
 include('../include/username.php');
 
+$id = $_SESSION["id"];
 $ind_id = $_SESSION["ind_id"];
 $ind_name = $_SESSION["ind_name"];
 $first_name = $_SESSION["first_name"];
 $last_name = $_SESSION["last_name"];
 $type = $_SESSION["type"];
 $year = $_SESSION['year'];
+
+
+$sql = "SELECT * FROM graph WHERE graph_id = '" . $id . "'";
+$objQuery = mysqli_query($connect, $sql);
+while ($row = mysqli_fetch_array($objQuery)) {
+    $number1 = $row['number1'];
+    $number2 = $row['number2'];
+    $number3 = $row['number3'];
+    $number4 = $row['number4'];
+    $number5 = $row['number5'];
+    $number6 = $row['number6'];
+    $number7 = $row['number7'];
+    $number8 = $row['number8'];
+    $number9 = $row['number9'];
+    $number10 = $row['number10'];
+    $number11 = $row['number11'];
+    $number12 = $row['number12'];
+    $divisor1 = $row['divisor1'];
+    $divisor2 = $row['divisor2'];
+    $divisor3 = $row['divisor3'];
+    $divisor4 = $row['divisor4'];
+    $divisor5 = $row['divisor5'];
+    $divisor6 = $row['divisor6'];
+    $divisor7 = $row['divisor7'];
+    $divisor8 = $row['divisor8'];
+    $divisor9 = $row['divisor9'];
+    $divisor10 = $row['divisor10'];
+    $divisor11 = $row['divisor11'];
+    $divisor12 = $row['divisor12'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -81,6 +112,8 @@ $year = $_SESSION['year'];
                                                     if (isset($_POST['submit'])) {
 
                                                         $id = $_POST['id'];
+                                                        $ind_id = $_SESSION["ind_id"];
+                                                        $year = $_SESSION['year'];
                                                         $number1 = $_POST['number1'];
                                                         $number2 = $_POST['number2'];
                                                         $number3 = $_POST['number3'];
@@ -117,12 +150,12 @@ $year = $_SESSION['year'];
                                                         ) {
 
                                                             if (
-                                                                is_numeric($number1) && is_numeric($number2) && is_numeric($number3) && is_numeric($number4)
-                                                                && is_numeric($number5) && is_numeric($number6) && is_numeric($number7) && is_numeric($number8)
-                                                                && is_numeric($number9) && is_numeric($number10) && is_numeric($number11) && is_numeric($number12)
-                                                                && is_numeric($divisor1) && is_numeric($divisor2) && is_numeric($divisor3) && is_numeric($divisor4)
-                                                                && is_numeric($divisor5) && is_numeric($divisor6) && is_numeric($divisor7) && is_numeric($divisor8)
-                                                                && is_numeric($divisor9) && is_numeric($divisor10) && is_numeric($divisor11) && is_numeric($divisor12)
+                                                                is_numeric($number1) || is_numeric($number2) || is_numeric($number3) || is_numeric($number4)
+                                                                || is_numeric($number5) || is_numeric($number6) || is_numeric($number7) || is_numeric($number8)
+                                                                || is_numeric($number9) || is_numeric($number10) || is_numeric($number11) || is_numeric($number12)
+                                                                || is_numeric($divisor1) || is_numeric($divisor2) || is_numeric($divisor3) || is_numeric($divisor4)
+                                                                || is_numeric($divisor5) || is_numeric($divisor6) || is_numeric($divisor7) || is_numeric($divisor8)
+                                                                || is_numeric($divisor9) || is_numeric($divisor10) || is_numeric($divisor11) || is_numeric($divisor12)
                                                             ) {
 
 
@@ -135,13 +168,14 @@ $year = $_SESSION['year'];
                                                                     $message = "ตัวหารต้องไม่เท่ากับ 0";
                                                                 } else {
 
-                                                                    $sql = "INSERT INTO graph (graph_id, indicator_id, year, number1, number2, number3, number4, number5, number6, 
-                                                                                    number7, number8, number9, number10, number11, number12, divisor1, divisor2, divisor3, divisor4, 
-                                                                                    divisor5, divisor6, divisor7, divisor8, divisor9, divisor10, divisor11, divisor12) 
-                                                                                VALUES ('$id','$ind_id','$year','$number1','$number2','$number3','$number4',
-                                                                                '$number5','$number6','$number7','$number8','$number9','$number10','$number11',
-                                                                                '$number12','$divisor1','$divisor2','$divisor3','$divisor4','$divisor5','$divisor6',
-                                                                                '$divisor7','$divisor8','$divisor9','$divisor10','$divisor11','$divisor12')";
+                                                                    $sql = "UPDATE graph SET number1='$number1', number2='$number2', number3='$number3', number4='$number4', 
+                                                                    number5='$number5', number6='$number6', number7='$number7', number8='$number8', 
+                                                                    number9='$number9', number10='$number10', number11='$number11', number12='$number12', 
+                                                                                            divisor1='$divisor1', divisor2='$divisor2', divisor3='$divisor3', divisor4='$divisor4',
+                                                                                            divisor5='$divisor5', divisor6='$divisor6', divisor7='$divisor7', divisor8='$divisor8',
+                                                                                            divisor9='$divisor9', divisor10='$divisor10', divisor11='$divisor11', divisor12='$divisor12'  
+                                                                        WHERE graph_id='$id'";
+
 
 
 
@@ -190,7 +224,6 @@ $year = $_SESSION['year'];
 
 
                                                     ?>
-
 
 
 
@@ -257,36 +290,37 @@ $year = $_SESSION['year'];
                                                             </tr>
                                                             <tr>
                                                                 <th>ตัวตั้ง</th>
-                                                                <td><input class="form-control" name="number1" id="number1" type="text"></td>
-                                                                <td><input class="form-control" name="number2" id="number2" type="text"></td>
-                                                                <td><input class="form-control" name="number3" id="number3" type="text"></td>
-                                                                <td><input class="form-control" name="number4" id="number4" type="text"></td>
-                                                                <td><input class="form-control" name="number5" id="number5" type="text"></td>
-                                                                <td><input class="form-control" name="number6" id="number6" type="text"></td>
-                                                                <td><input class="form-control" name="number7" id="number7" type="text"></td>
-                                                                <td><input class="form-control" name="number8" id="number8" type="text"></td>
-                                                                <td><input class="form-control" name="number9" id="number9" type="text"></td>
-                                                                <td><input class="form-control" name="number10" id="number10" type="text"></td>
-                                                                <td><input class="form-control" name="number11" id="number11" type="text"></td>
-                                                                <td><input class="form-control" name="number12" id="number12" type="text"></td>
+                                                                <td><input class="form-control" name="number1" id="number1" type="text" value="<?php echo $number1; ?>"></td>
+                                                                <td><input class="form-control" name="number2" id="number2" type="text" value="<?php echo $number2; ?>"></td>
+                                                                <td><input class="form-control" name="number3" id="number3" type="text" value="<?php echo $number3; ?>"></td>
+                                                                <td><input class="form-control" name="number4" id="number4" type="text" value="<?php echo $number4; ?>"></td>
+                                                                <td><input class="form-control" name="number5" id="number5" type="text" value="<?php echo $number5; ?>"></td>
+                                                                <td><input class="form-control" name="number6" id="number6" type="text" value="<?php echo $number6; ?>"></td>
+                                                                <td><input class="form-control" name="number7" id="number7" type="text" value="<?php echo $number7; ?>"></td>
+                                                                <td><input class="form-control" name="number8" id="number8" type="text" value="<?php echo $number8; ?>"></td>
+                                                                <td><input class="form-control" name="number9" id="number9" type="text" value="<?php echo $number9; ?>"></td>
+                                                                <td><input class="form-control" name="number10" id="number10" type="text" value="<?php echo $number10; ?>"></td>
+                                                                <td><input class="form-control" name="number11" id="number11" type="text" value="<?php echo $number11; ?>"></td>
+                                                                <td><input class="form-control" name="number12" id="number12" type="text" value="<?php echo $number12; ?>"></td>
                                                             </tr>
                                                             <tr>
                                                                 <th>ตัวหาร</th>
-                                                                <td><input class="form-control" name="divisor1" id="divisor1" type="text"></td>
-                                                                <td><input class="form-control" name="divisor2" id="divisor2" type="text"></td>
-                                                                <td><input class="form-control" name="divisor3" id="divisor3" type="text"></td>
-                                                                <td><input class="form-control" name="divisor4" id="divisor4" type="text"></td>
-                                                                <td><input class="form-control" name="divisor5" id="divisor5" type="text"></td>
-                                                                <td><input class="form-control" name="divisor6" id="divisor6" type="text"></td>
-                                                                <td><input class="form-control" name="divisor7" id="divisor7" type="text"></td>
-                                                                <td><input class="form-control" name="divisor8" id="divisor8" type="text"></td>
-                                                                <td><input class="form-control" name="divisor9" id="divisor9" type="text"></td>
-                                                                <td><input class="form-control" name="divisor10" id="divisor10" type="text"></td>
-                                                                <td><input class="form-control" name="divisor11" id="divisor11" type="text"></td>
-                                                                <td><input class="form-control" name="divisor12" id="divisor12" type="text"></td>
+                                                                <td><input class="form-control" name="divisor1" id="divisor1" type="text" value="<?php echo $divisor1; ?>"></td>
+                                                                <td><input class="form-control" name="divisor2" id="divisor2" type="text" value="<?php echo $divisor2; ?>"></td>
+                                                                <td><input class="form-control" name="divisor3" id="divisor3" type="text" value="<?php echo $divisor3; ?>"></td>
+                                                                <td><input class="form-control" name="divisor4" id="divisor4" type="text" value="<?php echo $divisor4; ?>"></td>
+                                                                <td><input class="form-control" name="divisor5" id="divisor5" type="text" value="<?php echo $divisor5; ?>"></td>
+                                                                <td><input class="form-control" name="divisor6" id="divisor6" type="text" value="<?php echo $divisor6; ?>"></td>
+                                                                <td><input class="form-control" name="divisor7" id="divisor7" type="text" value="<?php echo $divisor7; ?>"></td>
+                                                                <td><input class="form-control" name="divisor8" id="divisor8" type="text" value="<?php echo $divisor8; ?>"></td>
+                                                                <td><input class="form-control" name="divisor9" id="divisor9" type="text" value="<?php echo $divisor9; ?>"></td>
+                                                                <td><input class="form-control" name="divisor10" id="divisor10" type="text" value="<?php echo $divisor10; ?>"></td>
+                                                                <td><input class="form-control" name="divisor11" id="divisor11" type="text" value="<?php echo $divisor11; ?>"></td>
+                                                                <td><input class="form-control" name="divisor12" id="divisor12" type="text" value="<?php echo $divisor12; ?>"></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
+
 
                                                     <div class="form row">
                                                         <div class="col-sm-2">
@@ -296,10 +330,10 @@ $year = $_SESSION['year'];
                                                             <span class="h7 text-gray-900 mb-4 form-text"></span>
                                                             <input type="hidden" name="id" id="id" value="<?php echo $ind_id . $year; ?>" />
                                                             <button class="btn btn-secondary btn-user btn-block bg-gray-900" name="submit" type="submit" value="">แสดงกราฟ</button>
-
-
                                                         </div>
                                                     </div>
+
+
                                                 </form>
 
                                             </div>

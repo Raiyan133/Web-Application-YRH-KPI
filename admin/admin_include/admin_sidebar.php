@@ -97,15 +97,15 @@
   </a>
   <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded">
-      <a class="collapse-item" href="#">ดูกราฟ  & บทวิเคราะห์</a>
-      <a class="collapse-item" href="#">แก้ไขกราฟหรือบทวิเคราะห์</a>
-      <a class="collapse-item" href="#">ลบกราฟหรือบทวิเคราะห์</a>
+      <a class="collapse-item" href="admin_edit.php">ดูกราฟ & บทวิเคราะห์</a>
+      <a class="collapse-item" href="admin_edit.php">แก้ไขกราฟหรือบทวิเคราะห์</a>
+      <a class="collapse-item" href="admin_edit.php">ลบกราฟหรือบทวิเคราะห์</a>
   </div>
 </li>
 
 <!-- Nav Item - ป้อนข้อมูลตัวชี้วัด -->
 <li class="nav-item">
-  <a class="nav-link" href="#">
+  <a class="nav-link" href="admin_compare.php">
     <i class="fas fa-fw fa-chart-area"></i>
     <span>เปรียบเทียบกราฟ</span></a>
 </li>

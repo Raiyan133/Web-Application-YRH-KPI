@@ -73,13 +73,7 @@
           <div class="row justify-content-center">
 
             <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-1 col-md-6 mb-4">
-              <a href="index.php">
-                <span style="font-size: 45px;" class="text-gray-600">
-                  <i class="fas fa-home"></i>
-                </span>
-              </a>
-            </div>
+            
             <div class="col-xl-2 col-md-6 mb-4">
               <a href="#" class="btn btn-secondary btn-icon-split align-items-center" style="width:200px;height:50px">
                 <span class="text">ตัวชี้วัดทั้งหมด</span>
@@ -181,7 +175,6 @@
 
   <!-- Page level custom scripts -->
   <script src="js/demo/chart-area-demo.js"></script>
-  <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
 

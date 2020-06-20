@@ -2,18 +2,6 @@
 include('../include/db.php');
 include('../include/username.php');
 
-extract($_GET);
-$active = isset($_GET['active']) ? $_GET['active'] : "";
-$non_active = isset($_GET['non_active']) ? $_GET['non_active'] : "";
-if (!empty($active)) {
-  $sql = "UPDATE graph SET status='1' WHERE graph_id='$active' ";
-  $result = mysqli_query($connect, $sql);
-} else {
-  if (!empty($non_active)) {
-    $sql = "UPDATE graph SET status='0' WHERE graph_id='$non_active' ";
-    $result = mysqli_query($connect, $sql);
-  }
-}
 ?>
 
 <!DOCTYPE html>
@@ -125,9 +113,6 @@ if (!empty($active)) {
                             <th width="1">ระดับ</th>
                             <th width="1">ทีม</th>
                             <th width="1">ดูกราฟ</th>
-                            <th width="1">เลือก</th>
-                            <th width="1">ไม่เลือก</th>
-                            <th width="1">สถานะ</th>
                           </tr>
                           <thead>
 
@@ -158,20 +143,7 @@ if (!empty($active)) {
                               <td><?php echo $row["degree_name"]; ?></td>
                               <td><?php echo $row["team_code"]; ?></td>
                               <td><button type="button" class="btn btn-info btn-user btn-block bg-gradient-info" data-toggle="modal" data-target="#modalmoreinfo" data-id="<?php echo $row['graph_id']; ?>" id="moreinfo">ดู</button></td>
-                              <td><div align="center"><a href="admin_managehome.php?active=<?= $row['graph_id']; ?> "><img
-                                            src="../img/active.png" width="25" height="25"/></a></div></td>
-                              <td><div align="center"><a href="admin_managehome.php?non_active=<?= $row['graph_id']; ?>"><img
-                                            src="../img/active_non.png" width="25" height="25"/></a></div>
-                        </td>
-                              <td><span>
-            <?php $status = $row['status'];
-            if ($status == 1) {
-                echo '<span style="color:green">เลือก</span>';
-            } else {
-                echo '<span style="color:red">ไม่เลือก</span>';
-            }
-            ?>
-          </span></td>
+                             
 
                   </div>
                   </tr>
@@ -256,7 +228,7 @@ if (!empty($active)) {
           $('#dynamic-content').html(''); // leave it blank before ajax call
           $('#modal-loader').show();      // load ajax loader
           $.ajax({
-            url: 'moreinfo.php',
+            url: 'moreinfo_edit.php',
             type: 'POST',
             data: 'id='+graph,
             dataType: 'html'

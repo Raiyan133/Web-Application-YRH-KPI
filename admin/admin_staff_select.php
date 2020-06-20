@@ -50,7 +50,7 @@
                                     <td>'.$row["staff_name"].'</td>  
                                     <td>'.$row["staff_surname"].'</td> 
                                     <td>'.$row["staff_position"].'</td>
-                                    <td><button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-user btn-block bg-gradient-warning update" align="center">แก้ไข</button></td>  
+                                    <td><button type="button" name="update" id="'.$row["id"].'" class="btn btn-warning btn-user btn-block bg-gradient-warning update" onclick="topFunction()" align="center">แก้ไข</button></td>  
                                     <td><button type="button" name="delete" id="'.$row["id"].'" class="btn btn-danger btn-user btn-block bg-gradient-danger delete" align="center">ลบ</button></td>  
                                </tr>  
                               </tbody>
@@ -76,3 +76,10 @@
         
  }  
  ?>
+
+<script>
+  function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+</script>

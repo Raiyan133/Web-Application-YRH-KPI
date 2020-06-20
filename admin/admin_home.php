@@ -1,5 +1,8 @@
 <?php
   include('../include/username.php');
+  include('../include/db.php');
+
+
 ?>
 
 <!DOCTYPE html>
@@ -21,6 +24,8 @@
 
   <!-- Custom styles for this template-->
   <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
+  
 
 </head>
 
@@ -83,37 +88,121 @@
                 </div>
             </div>
           </div>
+<?php
+
+$sql = "SELECT graph.*, indicator.* FROM graph, indicator WHERE indicator.indicator_id=graph.indicator_id AND status='1' ";
+$objQuery = mysqli_query($connect, $sql);
+while ($row = mysqli_fetch_array($objQuery)) {
+  $ind_id = $row['indicator_id'];
+    $ind_name = $row['indicator_name'];
+    $number1 = $row['number1'];
+    $number2 = $row['number2'];
+    $number3 = $row['number3'];
+    $number4 = $row['number4'];
+    $divisor1 = $row['divisor1'];
+    $divisor2 = $row['divisor2'];
+    $divisor3 = $row['divisor3'];
+    $divisor4 = $row['divisor4'];
+    $comment = $row['comment'];
+    $date = $row['date'];
+    $year = $row['year'];
+    $username_post = $row['username_post'];
+
+
+    $result1 = $number1 * 100 / $divisor1;
+    $result2 = $number2 * 100 / $divisor2;
+    $result3 = $number3 * 100 / $divisor3;
+    $result4 = $number4 * 100 / $divisor4;
+
+    $dataPoints = array(
+        array("label" => "ต.ค. - ธ.ค.", "y" => $result1),
+        array("label" => "ม.ค. - มี.ค.", "y" => $result2),
+        array("label" => "เม.ย. - มิ.ย.", "y" => $result3),
+        array("label" => "ก.ค. - ก.ย.", "y" => $result4)
+
+    );
+
+
+?>
+<script>
+        window.onload = function() {
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                theme: "light1",
+                title: {
+                    text: ""
+                },
+                axisX: {
+                    valueFormatString: ""
+                },
+                axisY: {
+                    title: "",
+                    includeZero: false,  
+                },
+                data: [{
+                    type: "stackedArea",
+                    color: "#D8BFD8",
+                    xValueType: "dateTime",
+                    xValueFormatString: "",
+                    yValueFormatString: "#,##0 ",
+                    dataPoints: <?php echo json_encode($dataPoints); ?>
+                }]
+            });
+
+            chart.render();
+
+        }
+    </script>
+
+          
 
           <div class="row justify-content-center">
+                                                    <div class="col-xl-9 col-lg-7">
+                                                        <div class="card shadow mb-4">
+                                                            <!-- Card Header - Dropdown -->
+                                                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                                                <h6 class="m-0 font-weight-bold text-secondery"><?php echo $ind_id; ?> : <?php echo $ind_name; ?> ปี <?php echo $year; ?></h6>
+                                                                <div class="dropdown no-arrow">
+                                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                                                    </a>
+                                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                                                        <div class="dropdown-header">Dropdown Header:</div>
+                                                                        <a class="dropdown-item" href="#">Action</a>
+                                                                        <a class="dropdown-item" href="#">Another action</a>
+                                                                        <div class="dropdown-divider"></div>
+                                                                        <a class="dropdown-item" href="#">Something else here</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- Card Body -->
+                                                            <div class="card-body">
+                                                                <div class="chart-area">
+                                                                    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                                                                </div>
+                                                                <b><span class="text-gray-900 form-text text-left">วิเคราห์กราฟ</span></b>
 
-            <!-- Area Chart -->
-            <div class="col-xl-9 col-lg-7">
-              <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-secondery">Indicator Code</h6>
-                  <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Dropdown Header:</div>
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </div>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                  <div class="chart-area">
-                    <canvas id="myAreaChart"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+
+                                                                <div class="card shadow mb-4">
+
+                                                                    <div class="card-body">
+
+                                                                        <?php echo $comment; ?>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="small text-center">
+                                                                    <span>บันทึกข้อมูล : <?php echo $date; ?> โดย <?php echo $username_post; ?></span>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+  <?php } ?>
         </div>
         <!-- /.container-fluid -->
 
@@ -148,6 +237,8 @@
 
   <!-- Custom scripts for all pages-->
   <script src="../js/sb-admin-2.min.js"></script>
+
+  <script src="../js/canvasjs.min.js"></script>
 
 </body>
 
