@@ -6,12 +6,24 @@ extract($_GET);
 $active = isset($_GET['active']) ? $_GET['active'] : "";
 $non_active = isset($_GET['non_active']) ? $_GET['non_active'] : "";
 if (!empty($active)) {
-  $sql = "UPDATE graph SET status='1' WHERE graph_id='$active' ";
+  $sql = "UPDATE graph_m SET status='1' WHERE graph_m_id='$active' ";
   $result = mysqli_query($connect, $sql);
+  $sql1 = "UPDATE graph_3m SET status='1' WHERE graph_3m_id='$active' ";
+  $result1 = mysqli_query($connect, $sql1);
+  $sql2 = "UPDATE graph_6m SET status='1' WHERE graph_6m_id='$active' ";
+  $result2 = mysqli_query($connect, $sql2);
+  $sql3 = "UPDATE graph_y SET status='1' WHERE graph_y_id='$active' ";
+  $result3 = mysqli_query($connect, $sql3);
 } else {
   if (!empty($non_active)) {
-    $sql = "UPDATE graph SET status='0' WHERE graph_id='$non_active' ";
+    $sql = "UPDATE graph_m SET status='0' WHERE graph_m_id='$non_active' ";
     $result = mysqli_query($connect, $sql);
+    $sql1 = "UPDATE graph_3m SET status='0' WHERE graph_3m_id='$non_active' ";
+    $result1 = mysqli_query($connect, $sql1);
+    $sql2 = "UPDATE graph_6m SET status='0' WHERE graph_6m_id='$non_active' ";
+    $result2 = mysqli_query($connect, $sql2);
+    $sql3 = "UPDATE graph_y SET status='0' WHERE graph_y_id='$non_active' ";
+    $result3 = mysqli_query($connect, $sql3);
   }
 }
 ?>
@@ -20,151 +32,86 @@ if (!empty($active)) {
 <html lang="en">
 
 <head>
-
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>Admin Manage Homepage</title>
-
-  <!-- Custom fonts for this template-->
-  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-  <!-- Custom styles for this template-->
-  <link href="../css/sb-admin-2.min.css" rel="stylesheet">
-
-
-
+  <title>จัดการหน้าแรก</title>
+  <?php include('../include/head.php'); ?>
 </head>
 
 <body id="page-top">
-
-  <!-- Page Wrapper -->
   <div id="wrapper">
-
-    <!-- Sidebar -->
-    <?php
-    //session_start();
-    include('../admin/admin_include/admin_sidebar.php');
-    ?>
-    <!-- End of Sidebar -->
-
-    <!-- Content Wrapper -->
+    <?php include('../admin/admin_include/admin_sidebar.php'); ?>
     <div id="content-wrapper" class="d-flex flex-column">
-
-      <!-- Main Content -->
       <div id="content">
-
-        <!-- Topbar -->
-        <?php
-        //session_start();
-        include('../include/topbar.php');
-        ?>
-        <!-- End of Topbar -->
-
-        <!-- Begin Page Content -->
+        <?php include('../include/topbar.php'); ?>
         <div class="container-fluid">
-
-          <!-- Content Row -->
-          <div class="row justify-content-center">
-
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-2 col-md-6 mb-4">
-              <a href="#" class="btn btn-secondary btn-icon-split align-items-center" style="width:190px">
-                <span class="text">ตัวชี้วัดทั้งหมด</span>
-              </a>
-            </div>
-            <div class="col-xl-2 col-md-6 mb-4">
-              <a href="#" class="btn btn-secondary btn-icon-split align-items-center" style="width:190px">
-                <span class="text">ตัวชี้วัดระดับโรงพยาบาล</span>
-              </a>
-            </div>
-            <div class="col-xl-2 col-md-6 mb-4">
-              <a href="#" class="btn btn-secondary btn-icon-split align-items-center" style="width:190px">
-                <span class="text">ตัวชี้วัดระดับหน่วยงาน</span>
-              </a>
-            </div>
-            <div class="col-xl-2 col-md-6 mb-4">
-              <a href="#" class="btn btn-secondary btn-icon-split align-items-center" id="navbarDropdown" role="button" data-toggle="dropdown" style="width:190px">
-                <span class="text">ตัวชี้วัดเลือกตามรหัส</span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right animated--fade-in" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </div>
-          </div>
           <form id="form1" name="form1" method="post" action="">
             <div class="row justify-content-center">
               <div class="col-xl-12 col-lg-14 col-md-9">
-
-
-
                 <div class="card shadow mb-4">
                   <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-secondary">กราฟตัวชี้วัดทั้งหมด</h6>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table class="table table-bordered">
-
-
-
-
+                      <table class="table table-bordered" id="dataTable">
                         <thead>
                           <tr>
-                            <th width="1">รหัส</th>
-                            <th width="1">ชื่อตัวชี้วัด</th>
-                            <th width="1">ความถี่</th>
-                            <th width="1">ปี</th>
-                            <th width="1">ระดับ</th>
-                            <th width="1">ทีม</th>
-                            <th width="1">ดูกราฟ</th>
-                            <th width="1">เลือก</th>
-                            <th width="1">ไม่เลือก</th>
-                            <th width="1">สถานะ</th>
+                            <th width="3%">ปี</th>
+                            <th width="5%">รหัส</th>
+                            <th width="%">ชื่อตัวชี้วัด</th>
+                            <th width="5%">ความถี่</th>
+                            <th width="10%">ระดับ</th>
+                            <th width="5%">ทีม</th>
+                            <th width="8%">กราฟ</th>
+                            <th width="3%">เลือก</th>
+                            <th width="9%">ไม่เลือก</th>
+                            <th width="3%">สถานะ</th>
                           </tr>
-                          <thead>
+                        </thead>
 
-                            <?php
+                        <tbody>
 
-                            $sql = "SELECT graph.graph_id, graph.indicator_id, graph.year, indicator.type, graph.status, indicator.indicator_name, indicator.team_code, degree.degree_name FROM graph JOIN indicator ON indicator.indicator_id=graph.indicator_id JOIN degree ON degree.id=indicator.degree";
+                          <?php
+                          $sql = "SELECT graph_m.*, indicator.*, degree.* 
+                          FROM graph_m 
+                          JOIN indicator ON indicator.indicator_code=graph_m.indicator 
+                          JOIN degree ON degree.degree_id=indicator.degree";
 
-                            $result = mysqli_query($connect, $sql);
-                            while ($row = mysqli_fetch_array($result)) {
+                          $result = mysqli_query($connect, $sql);
+                          while ($row = mysqli_fetch_array($result)) {
 
-                              $indicator_id = $row["indicator_id"];
-                              $indicator_name = $row["indicator_name"];
-                              $type = $row["type"];
-                              $year = $row["year"];
-                              $degree_name = $row["degree_name"];
-                              $team_code = $row["team_code"];
-                              $status = $row['status'];
+                            $graph_id = $row['graph_m_id'];
+                            $indicator_code = $row["indicator_code"];
+                            $indicator_name = $row["indicator_name"];
+                            $year = $row["year"];
+                            $degree_name = $row["degree_name"];
+                            $team_code = $row["team_code"];
 
+                          ?>
 
-                            ?>
-
-                          <tbody>
                             <tr>
-                              <td><?php echo $row["indicator_id"]; ?></td>
-                              <td><?php echo $row["indicator_name"]; ?></td>
-                              <td><?php echo $row["type"]; ?></td>
                               <td><?php echo $row["year"]; ?></td>
+                              <td><?php echo $row["indicator_code"]; ?></td>
+                              <td><?php echo $row["indicator_name"]; ?></td>
+                              <td><?php echo "รายเดือน"; ?></td>
                               <td><?php echo $row["degree_name"]; ?></td>
                               <td><?php echo $row["team_code"]; ?></td>
-                              <td><button type="button" class="btn btn-info btn-user btn-block bg-gradient-info" data-toggle="modal" data-target="#modalmoreinfo" data-id="<?php echo $row['graph_id']; ?>" id="moreinfo">ดู</button></td>
+                              <td><a href="admin_managehome_view.php?id=<?= $row['graph_m_id']; ?>" type="button" class="btn btn-info btn-user btn-block bg-gradient-info">ดู</a></td>
                               <td>
-                                <div align="center"><a href="admin_managehome.php?active=<?= $row['graph_id']; ?> "><img src="../img/active.png" width="25" height="25" /></a></div>
+                                <div align="center">
+                                  <a href="admin_managehome.php?active=<?= $row['graph_m_id']; ?> ">
+                                    <img src="../img/active.png" width="25" height="25" />
+                                  </a>
+                                </div>
                               </td>
                               <td>
-                                <div align="center"><a href="admin_managehome.php?non_active=<?= $row['graph_id']; ?>"><img src="../img/active_non.png" width="25" height="25" /></a></div>
+                                <div align="center">
+                                  <a href="admin_managehome.php?non_active=<?= $row['graph_m_id']; ?>">
+                                    <img src="../img/active_non.png" width="25" height="25" />
+                                  </a>
+                                </div>
                               </td>
-                              <td><span>
+                              <td>
+                                <span>
                                   <?php $status = $row['status'];
                                   if ($status == 1) {
                                     echo '<span style="color:green">เลือก</span>';
@@ -172,110 +119,190 @@ if (!empty($active)) {
                                     echo '<span style="color:red">ไม่เลือก</span>';
                                   }
                                   ?>
-                                </span></td>
+                                </span>
+                              </td>
+                            </tr>
+                          <?php
+                          }
+
+                          $sql = "SELECT graph_3m.*, indicator.*, degree.* 
+                          FROM graph_3m 
+                          JOIN indicator ON indicator.indicator_code=graph_3m.indicator 
+                          JOIN degree ON degree.degree_id=indicator.degree";
+
+                          $result = mysqli_query($connect, $sql);
+                          while ($row = mysqli_fetch_array($result)) {
+
+                            $graph_id = $row['graph_3m_id'];
+                            $indicator_code = $row["indicator_code"];
+                            $indicator_name = $row["indicator_name"];
+                            $year = $row["year"];
+                            $degree_name = $row["degree_name"];
+                            $team_code = $row["team_code"];
+
+                          ?>
+
+                            <tr>
+                              <td><?php echo $row["year"]; ?></td>
+                              <td><?php echo $row["indicator_code"]; ?></td>
+                              <td><?php echo $row["indicator_name"]; ?></td>
+                              <td><?php echo "3 เดือน"; ?></td>
+                              <td><?php echo $row["degree_name"]; ?></td>
+                              <td><?php echo $row["team_code"]; ?></td>
+                              <td><a href="admin_managehome_view.php?id=<?= $row['graph_3m_id']; ?>" type="button" class="btn btn-info btn-user btn-block bg-gradient-info">ดู</a></td>
+                              <td>
+                                <div align="center">
+                                  <a href="admin_managehome.php?active=<?= $row['graph_3m_id']; ?> ">
+                                    <img src="../img/active.png" width="25" height="25" />
+                                  </a>
+                                </div>
+                              </td>
+                              <td>
+                                <div align="center">
+                                  <a href="admin_managehome.php?non_active=<?= $row['graph_3m_id']; ?>">
+                                    <img src="../img/active_non.png" width="25" height="25" />
+                                  </a>
+                                </div>
+                              </td>
+                              <td>
+                                <span>
+                                  <?php $status = $row['status'];
+                                  if ($status == 1) {
+                                    echo '<span style="color:green">เลือก</span>';
+                                  } else {
+                                    echo '<span style="color:red">ไม่เลือก</span>';
+                                  }
+                                  ?>
+                                </span>
+                              </td>
+                            </tr>
+                          <?php
+                          }
+
+                          $sql = "SELECT graph_6m.*, indicator.*, degree.* 
+                          FROM graph_6m 
+                          JOIN indicator ON indicator.indicator_code=graph_6m.indicator 
+                          JOIN degree ON degree.degree_id=indicator.degree";
+
+                          $result = mysqli_query($connect, $sql);
+                          while ($row = mysqli_fetch_array($result)) {
+
+                            $graph_id = $row['graph_6m_id'];
+                            $indicator_code = $row["indicator_code"];
+                            $indicator_name = $row["indicator_name"];
+                            $year = $row["year"];
+                            $degree_name = $row["degree_name"];
+                            $team_code = $row["team_code"];
+
+                          ?>
+
+                            <tr>
+                              <td><?php echo $row["year"]; ?></td>
+                              <td><?php echo $row["indicator_code"]; ?></td>
+                              <td><?php echo $row["indicator_name"]; ?></td>
+                              <td><?php echo "6 เดือน"; ?></td>
+                              <td><?php echo $row["degree_name"]; ?></td>
+                              <td><?php echo $row["team_code"]; ?></td>
+                              <td><a href="admin_managehome_view.php?id=<?= $row['graph_6m_id']; ?>" type="button" class="btn btn-info btn-user btn-block bg-gradient-info">ดู</a></td>
+                              <td>
+                                <div align="center">
+                                  <a href="admin_managehome.php?active=<?= $row['graph_6m_id']; ?> ">
+                                    <img src="../img/active.png" width="25" height="25" />
+                                  </a>
+                                </div>
+                              </td>
+                              <td>
+                                <div align="center">
+                                  <a href="admin_managehome.php?non_active=<?= $row['graph_6m_id']; ?>">
+                                    <img src="../img/active_non.png" width="25" height="25" />
+                                  </a>
+                                </div>
+                              </td>
+                              <td>
+                                <span>
+                                  <?php $status = $row['status'];
+                                  if ($status == 1) {
+                                    echo '<span style="color:green">เลือก</span>';
+                                  } else {
+                                    echo '<span style="color:red">ไม่เลือก</span>';
+                                  }
+                                  ?>
+                                </span>
+                              </td>
+
+                            </tr>
+                          <?php
+                          }
+
+                          $sql = "SELECT graph_y.*, indicator.*, degree.* 
+                          FROM graph_y 
+                          JOIN indicator ON indicator.indicator_code=graph_y.indicator 
+                          JOIN degree ON degree.degree_id=indicator.degree";
+
+                          $result = mysqli_query($connect, $sql);
+                          while ($row = mysqli_fetch_array($result)) {
+
+                            $graph_id = $row['graph_y_id'];
+                            $indicator_code = $row["indicator_code"];
+                            $indicator_name = $row["indicator_name"];
+                            $year = $row["year"];
+                            $degree_name = $row["degree_name"];
+                            $team_code = $row["team_code"];
+
+                          ?>
+
+                            <tr>
+                              <td><?php echo $row["year"]; ?></td>
+                              <td><?php echo $row["indicator_code"]; ?></td>
+                              <td><?php echo $row["indicator_name"]; ?></td>
+                              <td><?php echo "รายปี"; ?></td>
+                              <td><?php echo $row["degree_name"]; ?></td>
+                              <td><?php echo $row["team_code"]; ?></td>
+                              <td><a href="admin_managehome_view.php?id=<?= $row['graph_y_id']; ?>" type="button" class="btn btn-info btn-user btn-block bg-gradient-info">ดู</a></td>
+                              <td>
+                                <div align="center">
+                                  <a href="admin_managehome.php?active=<?= $row['graph_y_id']; ?> ">
+                                    <img src="../img/active.png" width="25" height="25" />
+                                  </a>
+                                </div>
+                              </td>
+                              <td>
+                                <div align="center">
+                                  <a href="admin_managehome.php?non_active=<?= $row['graph_y_id']; ?>">
+                                    <img src="../img/active_non.png" width="25" height="25" />
+                                  </a>
+                                </div>
+                              </td>
+                              <td>
+                                <span>
+                                  <?php $status = $row['status'];
+                                  if ($status == 1) {
+                                    echo '<span style="color:green">เลือก</span>';
+                                  } else {
+                                    echo '<span style="color:red">ไม่เลือก</span>';
+                                  }
+                                  ?>
+                                </span>
+                              </td>
+                            </tr>
+                          <?php } ?>
+
+                        </tbody>
+
+                      </table>
 
                     </div>
-                    </tr>
-                  <?php } ?>
-                  </tbody>
-
-                  </table>
-                  <div class="modal fade" id="modalmoreinfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                      <div class="modal-content ">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLongTitle">ข้อมูลเพิ่มเติม</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <div id="modal-loader" style="text-align: center; display: none;">
-                            <img src="ajax-loader.gif">
-                          </div>
-                          <div id="dynamic-content">
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
                   </div>
                 </div>
               </div>
-
-
             </div>
+          </form>
         </div>
-        </form>
       </div>
-      <!-- /.container-fluid -->
-
+      <?php include('../include/footer.php'); ?>
     </div>
-    <!-- End of Main Content -->
-
-    <!-- Footer -->
-    <?php
-    //session_start();
-    include('../include/footer.php');
-    ?>
-    <!-- End of Footer -->
-
   </div>
-  <!-- End of Content Wrapper -->
-
-  </div>
-  <!-- End of Page Wrapper -->
-
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-
-  <!-- Bootstrap core JavaScript-->
-  <script src="../vendor/jquery/jquery.min.js"></script>
-  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="../js/sb-admin-2.min.js"></script>
-
-
-
-  <script>
-    /* View Function*/
-    $(document).ready(function() {
-      $(document).on('click', '#moreinfo', function(e) {
-        e.preventDefault();
-        var graph = $(this).data('id'); // it will get id of clicked row
-        $('#dynamic-content').html(''); // leave it blank before ajax call
-        $('#modal-loader').show(); // load ajax loader
-        $.ajax({
-            url: 'moreinfo.php',
-            type: 'POST',
-            data: 'id=' + graph,
-            dataType: 'html'
-          })
-          .done(function(data) {
-            console.log(data);
-            $('#dynamic-content').html('');
-            $('#dynamic-content').html(data); // load response 
-            $('#modal-loader').hide(); // hide ajax loader 
-          })
-          .fail(function() {
-            $('#dynamic-content').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
-            $('#modal-loader').hide();
-          });
-      });
-    });
-  </script>
-
+  <?php include('../include/script.php'); ?>
 </body>
 
 </html>

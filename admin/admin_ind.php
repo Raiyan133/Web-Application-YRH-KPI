@@ -1,109 +1,55 @@
 <?php
-  include('../include/username.php');
+include('../include/db.php');
+include('../include/username.php');
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>Admin Manage Indicator</title>
-
-  <!-- Custom fonts for this template-->
-  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-  <!-- Custom styles for this template-->
-  <link href="../css/sb-admin-2.min.css" rel="stylesheet">
-
-  <!-- Custom styles for this page -->
-  <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+  <title>จัดการตัวชี้วัด</title>
+  <?php include('../include/head.php'); ?>
 
   <script>
-  function getTeam(val) {
-  	$.ajax({
-  	type: "POST",
-  	url: "admin_get_team.php",
-  	data:'degreeid='+val,
-  	success: function(data){
-  		$("#team").html(data);
-  	}
-  	});
-  }
+    function getTeam(val) {
+      $.ajax({
+        type: "POST",
+        url: "admin_get_team.php",
+        data: 'degreeid=' + val,
+        success: function(data) {
+          $("#team").html(data);
+        }
+      });
+    }
   </script>
 
 </head>
 
-<?php include "connectdb.php"; ?>
-
 <body id="page-top">
-
-  <!-- Page Wrapper -->
   <div id="wrapper">
-
-    <!-- Sidebar -->
-    <?php
-      //session_start();
-      include('../admin/admin_include/admin_sidebar.php');
-    ?>
-    <!-- End of Sidebar -->
-
-    <!-- Content Wrapper -->
+    <?php include('../admin/admin_include/admin_sidebar.php'); ?>
     <div id="content-wrapper" class="d-flex flex-column">
-
-      <!-- Main Content -->
       <div id="content">
-
-        <!-- Topbar -->
-        <?php
-        //session_start();
-        include('../include/topbar.php');
-        ?>
-        <!-- End of Topbar -->
-
-        <!-- Begin Page Content -->
+        <?php include('../include/topbar.php'); ?>
         <div class="container-fluid">
-
-          <!-- Content Row -->
           <div class="row justify-content-center">
             <div class="col-xl-8 col-lg-14 col-md-9">
               <div class="card o-hidden border-0 shadow-lg my-5">
                 <div class="card-body p-0 bg-gray-500">
-                  <!-- Nested Row within Card Body -->
-                  <div class="row">                   
+                  <div class="row">
                     <div class="col-lg-12">
                       <div class="p-5">
                         <div class="text-center">
                           <h1 class="h4 text-gray-900 mb-4">เพิ่มตัวชี้วัดใหม่</h1>
                         </div>
+
                         <form class="form-group text-right">
-                       
                           <div class="form row">
                             <div class="col-sm-2">
                               <span class="h7 text-gray-900 mb-4 form-text">รหัสตัวชี้วัด :</span>
                             </div>
-                            <div class="col-sm-4">
-                              <input class="form-control" id="indicator_id" name="indicator_id" type="text">
-                            </div>
-                            <div class="col-sm-2">
-                              <span class="h7 text-gray-900 mb-4 form-text">ความถี่ :</span>
-                            </div>
-                            <div class="col-sm-4">
-                              <select required class="form-control" name="type" id="type">
-                                <option value="" disabled selected>โปรดเลือกความถี่</option>
-                                <option value="รายเดือน">รายเดือน</option>
-                                <option value="3 เดือน">3 เดือน</option>
-                                <option value="6 เดือน">6 เดือน</option>
-                                <option value="รายปี">รายปี</option>
-                              </select>
+                            <div class="col-sm-10">
+                              <input class="form-control" id="indicator_code" name="indicator_code" type="text">
                             </div>
                           </div>
 
@@ -113,7 +59,7 @@
                             </div>
                             <div class="col-sm-10">
                               <input class="form-control" id="indicator_name" name="indicator_name" type="text">
-                            </div>                          
+                            </div>
                           </div>
 
                           <div class="form row">
@@ -122,7 +68,7 @@
                             </div>
                             <div class="col-sm-10">
                               <input class="form-control" id="first_name" name="first_name" type="text">
-                            </div>                          
+                            </div>
                           </div>
 
                           <div class="form row">
@@ -130,28 +76,30 @@
                               <span class="h7 text-gray-900 mb-4 form-text">ตัวหาร : </span>
                             </div>
                             <div class="col-sm-10">
-                              <input class="form-control" id="last_name" name="last_name" type="text"></td>
-                            </div>                          
+                              <input class="form-control" id="last_name" name="last_name" type="text">
+                            </div>
                           </div>
 
                           <div class="form-group row">
                             <div class="col-sm-2">
                               <span class="h7 text-gray-900 mb-4 form-text">ระดับ :</span>
                             </div>
+
                             <div class="col-sm-4">
                               <select class="form-control" type="text" name="degree" id="degree" onChange="getTeam(this.value);">
                                 <option value="">โปรดเลือกระดับ</option>
-                                  <?php
-                                  $sql1="SELECT * FROM degree";
-                                      $results=$dbhandle->query($sql1); 
-                                  while($rs=$results->fetch_assoc()) { 
-                                  ?>
-                                <option value="<?php echo $rs["id"]; ?>"><?php echo $rs["degree_name"]; ?></option>
-                                  <?php
-                                  }
-                                  ?>
+                                <?php
+                                $sql1 = "SELECT * FROM degree";
+                                $results = $connect->query($sql1);
+                                while ($rs = $results->fetch_assoc()) {
+                                ?>
+                                  <option value="<?php echo $rs["degree_id"]; ?>"><?php echo $rs["degree_name"]; ?></option>
+                                <?php
+                                }
+                                ?>
                               </select>
                             </div>
+
                             <div class="col-sm-2">
                               <span class="h7 text-gray-900 mb-4 form-text">ทีม :</span>
                             </div>
@@ -160,6 +108,7 @@
                                 <option value="">โปรดเลือกระดับก่อน</option>
                               </select>
                             </div>
+
                           </div>
 
                           <div class="form row">
@@ -167,191 +116,149 @@
                               <span class="h7 text-gray-900 mb-4 form-text"></span>
                             </div>
                             <div class="col-sm-10">
-                            <input type="hidden" name="id" id="num_id" />
-                                  
+                              <input type="hidden" name="id" id="num_id" />
                               <button class="btn btn-secondary btn-user btn-block bg-gray-900" type="button" name="admin_ind_action" id="admin_ind_action"></button>
-                              
-                            </div>                          
+                            </div>
                           </div>
+
                         </form>
+
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
-
             <div id="result" style="padding-top: 50px; width: 100%"></div>
           </div>
-
-          
         </div>
-        <!-- /.container-fluid -->
-
-
       </div>
-      <!-- End of Main Content -->
-
-      <!-- Footer -->
-      <?php
-      //session_start();
-      include('../include/footer.php');
-      ?>
-      <!-- End of Footer -->
-
+      <?php include('../include/footer.php'); ?>
     </div>
-    <!-- End of Content Wrapper -->
-
   </div>
-  <!-- End of Page Wrapper -->
-
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-
-  <!-- Bootstrap core JavaScript-->
-  <script src="../vendor/jquery/jquery.min.js"></script>
-  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="../js/sb-admin-2.min.js"></script>
-
-  <!-- Page level plugins
-  <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-  Page level custom scripts
-  <script src="../js/demo/datatables-demo.js"></script> -->
-
+  <?php include('../include/script.php'); ?>
 </body>
 
 
-<script>  
- $(document).ready(function(){  
-      fetchIndicator();  
-      function fetchIndicator()  
-      {  
-           var admin_ind_action = "admin_ind_select";  
-           $.ajax({  
-                url : "admin_ind_select.php",  
-                method:"POST",  
-                data:{admin_ind_action:admin_ind_action},  
-                success:function(data){  
-                     $('#indicator_id').val('');
-                     $('#indicator_name').val('');
-                     $('#first_name').val('');
-                     $('#last_name').val('');
-                     $('#type').val('');
-                     $('#degree').val('');
-                     $('#team').val('');
-                     $('#admin_ind_action').text('บันทึก');
-                     $('#result').html(data);  
-                }  
-           });  
-      }  
-      $('#admin_ind_action').click(function(){ 
-           var ind_id = $('#indicator_id').val();  
-           var Name = $('#indicator_name').val();
-           var firstName = $('#first_name').val();  
-           var lastName = $('#last_name').val();
-           var type = $('#type').val();  
-           var degree = $('#degree').val();  
-           var team = $('#team').val();  
-           var id = $('#num_id').val();  
-           var admin_ind_action = $('#admin_ind_action').text(); 
-           if(ind_id != '' && Name != ''  && firstName != '' && lastName != '' && degree != '' && team != '')  
-           {  
-           	  if ($('#type').val()) {
-                $.ajax({  
-                     url : "admin_ind_action.php",  
-                     method:"POST",  
-                     data:{ind_id:ind_id, Name:Name, firstName:firstName, lastName:lastName, type:type, degree:degree, team:team, id:id, admin_ind_action:admin_ind_action},  
-                     success:function(data){  
-                          alert(data);  
-                          fetchIndicator();  
-                     }  
-                });  
-              }  
-              else  
-              {  
-                alert("กรุณาเลือกความถี่"); 
-              }
-           }  
-           else  
-           {  
-                alert("กรุณาป้อนข้อมูลให้ครบทุกช่อง");  
-           }  
-      });  
-      $(document).on('click', '.update', function(){  
-           var id = $(this).attr("id");  
-           $.ajax({  
-                url:"admin_ind_fetch.php",  
-                method:"POST",  
-                data:{id:id},  
-                dataType:"json",  
-                success:function(data){
-                      getTeam1(id, data);  
-                }  
-           })  
-      });  
-      $(document).on('click', '.delete', function(){  
-           var id = $(this).attr("id");  
-           if(confirm("คุณแน่ใจว่าต้องการลบหรือไม่ ?"))  
-           {  
-                var admin_ind_action = "ลบ";  
-                $.ajax({  
-                     url:"admin_ind_action.php",  
-                     method:"POST",  
-                     data:{id:id, admin_ind_action:admin_ind_action},  
-                     success:function(data)  
-                     {  
-                          fetchIndicator();  
-                          alert(data);  
-                     }  
-                })  
-           }  
-           else  
-           {  
-                return false;  
-           }  
-      });  
- });  
+<script>
+  $(document).ready(function() {
+    fetchIndicator();
 
- function getTeam1(id, data1) {
-  	$.ajax({
-  	type: "POST",
-  	url: "admin_get_team.php",
-  	data:'degreeid='+data1.degree,
-  	success: function(data){
-  		$("#team").html(data);
-      setData(id, data1);
-  	}
-  	});
+    function fetchIndicator() {
+      var admin_ind_action = "admin_ind_select";
+      $.ajax({
+        url: "admin_ind_select.php",
+        method: "POST",
+        data: {
+          admin_ind_action: admin_ind_action
+        },
+        success: function(data) {
+          $('#indicator_code').val('');
+          $('#indicator_name').val('');
+          $('#first_name').val('');
+          $('#last_name').val('');
+          $('#degree').val('');
+          $('#team').val('');
+          $('#admin_ind_action').text('บันทึก');
+          $('#result').html(data);
+        }
+      });
+    }
+    $('#admin_ind_action').click(function() {
+      var ind_code = $('#indicator_code').val();
+      var Name = $('#indicator_name').val();
+      var firstName = $('#first_name').val();
+      var lastName = $('#last_name').val();
+      var degree = $('#degree').val();
+      var team = $('#team').val();
+      var id = $('#num_id').val();
+      var admin_ind_action = $('#admin_ind_action').text();
+      if (ind_code != '' && Name != '' && firstName != '' && lastName != '' && team != '') {
+        if ($('#degree').val()) {
+          $.ajax({
+            url: "admin_ind_action.php",
+            method: "POST",
+            data: {
+              ind_code: ind_code,
+              Name: Name,
+              firstName: firstName,
+              lastName: lastName,
+              degree: degree,
+              team: team,
+              id: id,
+              admin_ind_action: admin_ind_action
+            },
+            success: function(data) {
+              alert(data);
+              fetchIndicator();
+            }
+          });
+        } else {
+          alert("กรุณาเลือกระดับ");
+        }
+      } else {
+        alert("กรุณาป้อนข้อมูลให้ครบทุกช่อง");
+      }
+    });
+    $(document).on('click', '.update', function() {
+      var id = $(this).attr("id");
+      $.ajax({
+        url: "admin_ind_fetch.php",
+        method: "POST",
+        data: {
+          id: id
+        },
+        dataType: "json",
+        success: function(data) {
+          getTeam1(id, data);
+        }
+      })
+    });
+    $(document).on('click', '.delete', function() {
+      var id = $(this).attr("id");
+      if (confirm("คุณแน่ใจว่าต้องการลบหรือไม่ ?")) {
+        var admin_ind_action = "ลบ";
+        $.ajax({
+          url: "admin_ind_action.php",
+          method: "POST",
+          data: {
+            id: id,
+            admin_ind_action: admin_ind_action
+          },
+          success: function(data) {
+            fetchIndicator();
+            alert(data);
+          }
+        })
+      } else {
+        return false;
+      }
+    });
+  });
+
+  function getTeam1(id, data1) {
+    $.ajax({
+      type: "POST",
+      url: "admin_get_team.php",
+      data: 'degreeid=' + data1.degree,
+      success: function(data) {
+        $("#team").html(data);
+        setData(id, data1);
+      }
+    });
   }
- function setData(id, data)
- {
-  $('#admin_ind_action').text("บันทึกการแก้ไข");  
-                     $('#num_id').val(id);  
-                     $('#indicator_id').val(data.indicator_id);  
-                     $('#indicator_name').val(data.indicator_name);  
-                     $('#first_name').val(data.first_name);  
-                     $('#last_name').val(data.last_name); 
-                     $('#type').val(data.type); 
-                     $('#degree').val(data.degree); 
-                      $('#team').val(data.team);
- }
 
- </script> 
-
-
-
-
+  function setData(id, data) {
+    $('#admin_ind_action').text("บันทึกการแก้ไข");
+    $('#num_id').val(id);
+    $('#indicator_code').val(data.indicator_code);
+    $('#indicator_name').val(data.indicator_name);
+    $('#first_name').val(data.first_name);
+    $('#last_name').val(data.last_name);
+    $('#degree').val(data.degree);
+    $('#team').val(data.team);
+  }
+</script>
 
 
 </html>
