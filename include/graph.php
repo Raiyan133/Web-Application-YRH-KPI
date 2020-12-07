@@ -8,10 +8,11 @@
         text: ""
       },
       axisX: {
+        title: "ระยะเวลา",
         valueFormatString: ""
       },
       axisY: {
-        title: "",
+        title: "ผลรวมของจำนวนทั้งหมด",
         includeZero: false,
       },
       data: [{
